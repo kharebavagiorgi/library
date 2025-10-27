@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.library.com/schema"
+           xmlns="http://www.library.com/schema"
+           elementFormDefault="qualified">
+
+    <xs:simpleType name="GenreType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FICTION"/>
+            <xs:enumeration value="NON_FICTION"/>
+            <xs:enumeration value="SCIENCE"/>
+            <xs:enumeration value="HISTORY"/>
+            <xs:enumeration value="ART"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AddressType">
+        <xs:attribute name="street" type="xs:string" use="required"/>
+        <xs:attribute name="city" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="UserType">
+        <xs:sequence>
+            <xs:element name="registrationDateTime" type="xs:dateTime"/>
+            <xs:element name="address" type="AddressType"/>
+        </xs:sequence>
+        <xs:attribute name="userId" type="xs:ID" use="required"/>
+        <xs:attribute name="isActive" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="BookType">
+        <xs:sequence>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="publicationDate" type="xs:date"/>
+            <xs:element name="pageCount" type="xs:int"/>
+            <xs:element name="genre" type="GenreType"/>
+        </xs:sequence>
+        <xs:attribute name="isbn" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="library">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="books">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="book" type="BookType" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="users">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="user" type="UserType" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

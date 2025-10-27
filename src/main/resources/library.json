@@ -1,0 +1,40 @@
+{
+  "name": "City Central Library",
+  "books": [
+    {
+      "isbn": "978-0321765723",
+      "title": "The Art of Programming",
+      "publicationDate": "2011-05-25",
+      "pageCount": 888,
+      "genre": "SCIENCE"
+    },
+    {
+      "isbn": "978-1503734008",
+      "title": "Historical Contexts",
+      "publicationDate": "2018-10-10",
+      "pageCount": 450,
+      "genre": "HISTORY"
+    },
+    {
+      "isbn": "978-0596009205",
+      "title": "Head First Java",
+      "publicationDate": "2005-02-09",
+      "pageCount": 720,
+      "genre": "EDUCATION"
+    }
+  ],
+  "users": [
+    {
+      "userId": "U001",
+      "isActive": true,
+      "registrationDateTime": "2023-01-15T10:30:00",
+      "address": { "street": "Main St 101", "city": "Metropolis" }
+    },
+    {
+      "userId": "U002",
+      "isActive": false,
+      "registrationDateTime": "2024-03-20T14:45:00",
+      "address": { "street": "Oak Ave 50", "city": "Gotham" }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library name="City Central Library"
+         xmlns="http://www.library.com/schema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.library.com/schema library.xsd">
+
+    <books>
+        <book isbn="978-0321765723">
+            <title>The Art of Programming</title>
+            <publicationDate>2011-05-25</publicationDate>
+            <pageCount>888</pageCount>
+            <genre>SCIENCE</genre>
+        </book>
+        <book isbn="978-1503734008">
+            <title>Historical Contexts</title>
+            <publicationDate>2018-10-10</publicationDate>
+            <pageCount>450</pageCount>
+            <genre>HISTORY</genre>
+        </book>
+    </books>
+
+    <users>
+        <user userId="U001" isActive="true">
+            <registrationDateTime>2023-01-15T10:30:00</registrationDateTime>
+            <address street="Main St 101" city="Metropolis"/>
+        </user>
+        <user userId="U002" isActive="false">
+            <registrationDateTime>2024-03-20T14:45:00</registrationDateTime>
+            <address street="Oak Ave 50" city="Gotham"/>
+        </user>
+    </users>
+</library>
