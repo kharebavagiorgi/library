@@ -11,12 +11,21 @@
             <xs:enumeration value="SCIENCE"/>
             <xs:enumeration value="HISTORY"/>
             <xs:enumeration value="ART"/>
+            <xs:enumeration value="EDUCATION"/>
         </xs:restriction>
     </xs:simpleType>
 
     <xs:complexType name="AddressType">
         <xs:attribute name="street" type="xs:string" use="required"/>
         <xs:attribute name="city" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ReviewType">
+        <xs:sequence>
+            <xs:element name="rating" type="xs:int"/>
+            <xs:element name="comment" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="reviewId" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="UserType">
@@ -34,13 +43,50 @@
             <xs:element name="publicationDate" type="xs:date"/>
             <xs:element name="pageCount" type="xs:int"/>
             <xs:element name="genre" type="GenreType"/>
+            <xs:element name="reviews">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="review" type="ReviewType" maxOccurs="unbounded" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
         <xs:attribute name="isbn" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="DepartmentType">
+        <xs:attribute name="deptId" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="EmployeeType">
+        <xs:sequence>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="departmentId" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="empId" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:element name="library">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="departments">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="department" type="DepartmentType" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="employees">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="employee" type="EmployeeType" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
                 <xs:element name="books">
                     <xs:complexType>
                         <xs:sequence>
@@ -48,6 +94,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+
                 <xs:element name="users">
                     <xs:complexType>
                         <xs:sequence>
