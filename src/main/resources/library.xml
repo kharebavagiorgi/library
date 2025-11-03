@@ -4,18 +4,52 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.library.com/schema library.xsd">
 
+    <departments>
+        <department deptId="D001" name="Fiction &amp; Literature"/>
+        <department deptId="D002" name="Science &amp; Tech"/>
+    </departments>
+
+    <employees>
+        <employee empId="E100">
+            <firstName>Alice</firstName>
+            <lastName>Smith</lastName>
+            <departmentId>D001</departmentId>
+        </employee>
+        <employee empId="E101">
+            <firstName>Bob</firstName>
+            <lastName>Jones</lastName>
+            <departmentId>D002</departmentId>
+        </employee>
+    </employees>
+
     <books>
         <book isbn="978-0321765723">
             <title>The Art of Programming</title>
             <publicationDate>2011-05-25</publicationDate>
             <pageCount>888</pageCount>
             <genre>SCIENCE</genre>
+            <reviews>
+                <review reviewId="R001">
+                    <rating>5</rating>
+                    <comment>Excellent resource for deep learning.</comment>
+                </review>
+                <review reviewId="R002">
+                    <rating>4</rating>
+                    <comment>A bit dense, but very comprehensive.</comment>
+                </review>
+            </reviews>
         </book>
         <book isbn="978-1503734008">
             <title>Historical Contexts</title>
             <publicationDate>2018-10-10</publicationDate>
             <pageCount>450</pageCount>
             <genre>HISTORY</genre>
+            <reviews>
+                <review reviewId="R003">
+                    <rating>3</rating>
+                    <comment>Interesting overview.</comment>
+                </review>
+            </reviews>
         </book>
     </books>
 
