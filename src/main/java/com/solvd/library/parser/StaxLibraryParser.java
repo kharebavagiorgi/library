@@ -9,23 +9,15 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.*;
 import javax.xml.stream.events.*;
 
-/**
- * Parses the library.xml file using the StAX (Streaming API for XML) parser.
- * It builds a complete Library object hierarchy from the XML data.
- *
- * Javadoc with 5 XPaths for library.xml:
- * 1. Find all book titles: /library/books/book/title
- * 2. Find the ISBN of the second book: /library/books/book[2]/@isbn
- * 3. Find the registration date/time of the user with userId="U001": /library/users/user[@userId='U001']/registrationDateTime
- * 4. Find all cities where users live: /library/users/user/address/@city
- * 5. Find the page count of the book with genre 'SCIENCE': /library/books/book[genre='SCIENCE']/pageCount
- */
 public class StaxLibraryParser {
 
     public Library parse(String xmlFilePath) throws Exception {
         Library library = null;
         Book currentBook = null;
         User currentUser = null;
+        Department currentDepartment = null;
+        Employee currentEmployee = null;
+        Review currentReview = null;
 
         String currentElementTag = "";
 
@@ -53,12 +45,32 @@ public class StaxLibraryParser {
                         }
                         break;
 
+                    case "department":
+                        currentDepartment = new Department();
+                        Attribute deptIdAttr = startElement.getAttributeByName(new QName("deptId"));
+                        Attribute deptNameAttr = startElement.getAttributeByName(new QName("name"));
+                        if (deptIdAttr != null) { currentDepartment.setDeptId(deptIdAttr.getValue()); }
+                        if (deptNameAttr != null) { currentDepartment.setName(deptNameAttr.getValue()); }
+                        break;
+
+                    case "employee":
+                        currentEmployee = new Employee();
+                        Attribute empIdAttr = startElement.getAttributeByName(new QName("empId"));
+                        if (empIdAttr != null) { currentEmployee.setEmpId(empIdAttr.getValue()); }
+                        break;
+
                     case "book":
                         currentBook = new Book();
                         Attribute isbnAttr = startElement.getAttributeByName(new QName("isbn"));
                         if (isbnAttr != null) {
                             currentBook.setIsbn(isbnAttr.getValue());
                         }
+                        break;
+
+                    case "review":
+                        currentReview = new Review();
+                        Attribute reviewIdAttr = startElement.getAttributeByName(new QName("reviewId"));
+                        if (reviewIdAttr != null) { currentReview.setReviewId(reviewIdAttr.getValue()); }
                         break;
 
                     case "user":
@@ -99,7 +111,14 @@ public class StaxLibraryParser {
                 if (!characters.isWhiteSpace()) {
                     String value = characters.getData();
 
-                    if (currentBook != null) {
+                    if (currentReview != null) {
+                        if (currentElementTag.equals("rating")) {
+                            currentReview.setRating(Integer.parseInt(value));
+                        } else if (currentElementTag.equals("comment")) {
+                            currentReview.setComment(value);
+                        }
+                    }
+                    else if (currentBook != null) {
                         switch (currentElementTag) {
                             case "title":
                                 currentBook.setTitle(value);
@@ -120,6 +139,18 @@ public class StaxLibraryParser {
                                 currentUser.setRegistrationDateTime(LocalDateTime.parse(value));
                                 break;
                         }
+                    } else if (currentEmployee != null) {
+                        switch (currentElementTag) {
+                            case "firstName":
+                                currentEmployee.setFirstName(value);
+                                break;
+                            case "lastName":
+                                currentEmployee.setLastName(value);
+                                break;
+                            case "departmentId":
+                                currentEmployee.setDepartmentId(value);
+                                break;
+                        }
                     }
                 }
             }
@@ -129,12 +160,24 @@ public class StaxLibraryParser {
                 String localPart = endElement.getName().getLocalPart();
 
                 if (library != null) {
-                    if (localPart.equals("book")) {
+                    if (localPart.equals("review")) {
+                        if (currentBook != null && currentReview != null) {
+                            currentBook.getReviews().add(currentReview);
+                        }
+                        currentReview = null;
+                    }
+                    else if (localPart.equals("book")) {
                         library.getBooks().add(currentBook);
                         currentBook = null;
                     } else if (localPart.equals("user")) {
                         library.getUsers().add(currentUser);
                         currentUser = null;
+                    } else if (localPart.equals("department")) {
+                        library.getDepartments().add(currentDepartment);
+                        currentDepartment = null;
+                    } else if (localPart.equals("employee")) {
+                        library.getEmployees().add(currentEmployee);
+                        currentEmployee = null;
                     }
                 }
             }
