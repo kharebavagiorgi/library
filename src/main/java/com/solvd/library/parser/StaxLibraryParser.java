@@ -49,14 +49,14 @@ public class StaxLibraryParser {
                         currentDepartment = new Department();
                         Attribute deptIdAttr = startElement.getAttributeByName(new QName("deptId"));
                         Attribute deptNameAttr = startElement.getAttributeByName(new QName("name"));
-                        if (deptIdAttr != null) { currentDepartment.setDeptId(deptIdAttr.getValue()); }
+                        if (deptIdAttr != null) { currentDepartment.setId(Long.valueOf(deptIdAttr.getValue())); }
                         if (deptNameAttr != null) { currentDepartment.setName(deptNameAttr.getValue()); }
                         break;
 
                     case "employee":
                         currentEmployee = new Employee();
                         Attribute empIdAttr = startElement.getAttributeByName(new QName("empId"));
-                        if (empIdAttr != null) { currentEmployee.setEmpId(empIdAttr.getValue()); }
+                        if (empIdAttr != null) { currentEmployee.setId(Long.valueOf(empIdAttr.getValue())); }
                         break;
 
                     case "book":
@@ -70,7 +70,7 @@ public class StaxLibraryParser {
                     case "review":
                         currentReview = new Review();
                         Attribute reviewIdAttr = startElement.getAttributeByName(new QName("reviewId"));
-                        if (reviewIdAttr != null) { currentReview.setReviewId(reviewIdAttr.getValue()); }
+                        if (reviewIdAttr != null) { currentReview.setId(Long.valueOf(reviewIdAttr.getValue())); }
                         break;
 
                     case "user":
@@ -80,7 +80,7 @@ public class StaxLibraryParser {
                             Attribute attr = userAttrs.next();
                             String attrName = attr.getName().getLocalPart();
                             if (attrName.equals("userId")) {
-                                currentUser.setUserId(attr.getValue());
+                                currentUser.setId(Long.valueOf(attr.getValue()));
                             } else if (attrName.equals("isActive")) {
                                 currentUser.setActive(Boolean.parseBoolean(attr.getValue()));
                             }
