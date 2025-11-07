@@ -104,7 +104,7 @@ public class Main {
             String json = new ObjectMapper().readTree(jsonFile).toString();
 
             List<String> titles = JsonPath.read(json, "$.books[*].title");
-            List<String> userIds = JsonPath.read(json, "$.users[*].userId");
+            List<String> userIds = JsonPath.read(json, "$.users[*].id");
             List<String> cities = JsonPath.read(json, "$.users[*].address.city");
             String firstIsbn = JsonPath.read(json, "$.books[0].isbn");
             List<String> genres = JsonPath.read(json, "$.books[*].genre");
