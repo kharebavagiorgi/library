@@ -1,66 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<library name="City Central Library"
+<library id="1" name="City Central Library"
          xmlns="http://www.library.com/schema"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.library.com/schema library.xsd">
 
-    <departments>
-        <department deptId="D001" name="Fiction &amp; Literature"/>
-        <department deptId="D002" name="Science &amp; Tech"/>
-    </departments>
-
-    <employees>
-        <employee empId="E100">
-            <firstName>Alice</firstName>
-            <lastName>Smith</lastName>
-            <departmentId>D001</departmentId>
-        </employee>
-        <employee empId="E101">
-            <firstName>Bob</firstName>
-            <lastName>Jones</lastName>
-            <departmentId>D002</departmentId>
-        </employee>
-    </employees>
-
     <books>
-        <book isbn="978-0321765723">
+        <book>
+            <id>1</id>
+            <isbn>978-0321765723</isbn>
             <title>The Art of Programming</title>
             <publicationDate>2011-05-25</publicationDate>
             <pageCount>888</pageCount>
             <genre>SCIENCE</genre>
             <reviews>
-                <review reviewId="R001">
+                <review id="1">
                     <rating>5</rating>
-                    <comment>Excellent resource for deep learning.</comment>
-                </review>
-                <review reviewId="R002">
-                    <rating>4</rating>
-                    <comment>A bit dense, but very comprehensive.</comment>
+                    <comment>Excellent resource.</comment>
                 </review>
             </reviews>
         </book>
-        <book isbn="978-1503734008">
-            <title>Historical Contexts</title>
-            <publicationDate>2018-10-10</publicationDate>
-            <pageCount>450</pageCount>
-            <genre>HISTORY</genre>
+        <book>
+            <id>4</id>
+            <isbn>978-0451524823</isbn>
+            <title>A Study in Scarlet</title>
+            <publicationDate>1887-12-01</publicationDate>
+            <pageCount>128</pageCount>
+            <genre>FICTION</genre>
             <reviews>
-                <review reviewId="R003">
-                    <rating>3</rating>
-                    <comment>Interesting overview.</comment>
+                <review id="50">
+                    <rating>5</rating>
+                    <comment>The introduction to the legendary detective and his loyal companion.</comment>
+                </review>
+                <review id="51">
+                    <rating>4</rating>
+                    <comment>A classic start to the Holmes saga.</comment>
                 </review>
             </reviews>
         </book>
     </books>
 
     <users>
-        <user userId="U001" isActive="true">
+        <user id="101" isActive="true">
             <registrationDateTime>2023-01-15T10:30:00</registrationDateTime>
-            <address street="Main St 101" city="Metropolis"/>
-        </user>
-        <user userId="U002" isActive="false">
-            <registrationDateTime>2024-03-20T14:45:00</registrationDateTime>
-            <address street="Oak Ave 50" city="Gotham"/>
+            <address id="501" street="Main St 101" city="Metropolis"/>
         </user>
     </users>
+
+    <departments>
+        <department id="201" name="Science &amp; Tech">
+            <book>
+                <id>1</id>
+
+                <isbn>978-0321765723</isbn>
+
+                <title>The Art of Programming</title>
+
+                <publicationDate>2011-05-25</publicationDate>
+
+                <pageCount>888</pageCount>
+
+                <genre>SCIENCE</genre>
+
+                <reviews>
+                    <review id="1">
+                        <rating>5</rating>
+                        <comment>Excellent resource.</comment>
+                    </review>
+                </reviews>
+            </book>
+        </department>
+    </departments>
+
+    <employees>
+        <employee id="301">
+            <firstName>Alice</firstName>
+            <lastName>Smith</lastName>
+            <departmentId>D001</departmentId>
+        </employee>
+    </employees>
 </library>
