@@ -1,7 +1,9 @@
 {
+  "id": 1,
   "name": "City Central Library",
   "books": [
     {
+      "id": 1,
       "isbn": "978-0321765723",
       "title": "The Art of Programming",
       "publicationDate": "2011-05-25",
@@ -9,76 +11,54 @@
       "genre": "SCIENCE",
       "reviews": [
         {
-          "reviewId": "R001",
+          "id": 1,
           "rating": 5,
-          "comment": "Excellent resource for deep learning."
-        },
-        {
-          "reviewId": "R002",
-          "rating": 4,
-          "comment": "A bit dense, but very comprehensive."
+          "comment": "Excellent resource."
         }
       ]
-    },
-    {
-      "isbn": "978-1503734008",
-      "title": "Historical Contexts",
-      "publicationDate": "2018-10-10",
-      "pageCount": 450,
-      "genre": "HISTORY",
-      "reviews": [
-        {
-          "reviewId": "R003",
-          "rating": 3,
-          "comment": "Interesting overview."
-        }
-      ]
-    },
-    {
-      "isbn": "978-0596009205",
-      "title": "Head First Java",
-      "publicationDate": "2005-02-09",
-      "pageCount": 720,
-      "genre": "EDUCATION",
-      "reviews": []
     }
   ],
   "users": [
     {
-      "userId": "U001",
+      "id": 101,
       "isActive": true,
       "registrationDateTime": "2023-01-15T10:30:00",
-      "address": { "street": "Main St 101", "city": "Metropolis" }
-    },
-    {
-      "userId": "U002",
-      "isActive": false,
-      "registrationDateTime": "2024-03-20T14:45:00",
-      "address": { "street": "Oak Ave 50", "city": "Gotham" }
+      "address": {
+        "id": 501,
+        "street": "Main St 101",
+        "city": "Metropolis"
+      }
     }
   ],
   "departments": [
     {
-      "deptId": "D001",
-      "name": "Fiction & Literature"
-    },
-    {
-      "deptId": "D002",
-      "name": "Science & Tech"
+      "id": 201,
+      "name": "Science & Tech",
+      "books": [
+        {
+          "id": 1,
+          "isbn": "978-0321765723",
+          "title": "The Art of Programming",
+          "publicationDate": "2011-05-25",
+          "pageCount": 888,
+          "genre": "SCIENCE",
+          "reviews": [
+            {
+              "id": 1,
+              "rating": 5,
+              "comment": "Excellent resource."
+            }
+          ]
+        }
+      ]
     }
   ],
   "employees": [
     {
-      "empId": "E100",
+      "id": 301,
       "firstName": "Alice",
       "lastName": "Smith",
       "departmentId": "D001"
-    },
-    {
-      "empId": "E101",
-      "firstName": "Bob",
-      "lastName": "Jones",
-      "departmentId": "D002"
     }
   ]
 }
