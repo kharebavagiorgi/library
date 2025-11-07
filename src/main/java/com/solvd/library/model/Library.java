@@ -1,49 +1,56 @@
 package com.solvd.library.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.xml.bind.annotation.*;
 
-@XmlType(propOrder = {"isbn", "title", "publicationDate", "pageCount", "genre", "reviews"}) //
-@XmlAccessorType(XmlAccessType.PROPERTY)
-public class Book {
-    private String isbn;
-    private String title;
-    private LocalDate publicationDate;
-    private int pageCount;
-    private Genre genre;
+@XmlRootElement(
+        name = "library",
+        namespace = "http://www.library.com/schema"
+)
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Library {
 
-    private List<Review> reviews = new ArrayList<>();
-
-    public Book() {}
-
+    private static final String LIBRARY_NAMESPACE = "http://www.library.com/schema";
     @XmlAttribute
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    private Long id;
+    @XmlAttribute
+    private String name;
 
-    @XmlElement
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    @XmlElementWrapper(name = "books", namespace = LIBRARY_NAMESPACE)
+    @XmlElement(name = "book", namespace = LIBRARY_NAMESPACE)
+    private List<Book> books = new ArrayList<>();
 
-    @XmlElement
-    public int getPageCount() { return pageCount; }
-    public void setPageCount(int pageCount) { this.pageCount = pageCount; }
+    @XmlElementWrapper(name = "users", namespace = LIBRARY_NAMESPACE)
+    @XmlElement(name = "user", namespace = LIBRARY_NAMESPACE)
+    private List<User> users = new ArrayList<>();
 
-    @XmlElement
-    public LocalDate getPublicationDate() { return publicationDate; }
-    public void setPublicationDate(LocalDate publicationDate) { this.publicationDate = publicationDate; }
+    @XmlElementWrapper(name = "departments", namespace = LIBRARY_NAMESPACE)
+    @XmlElement(name = "department", namespace = LIBRARY_NAMESPACE)
+    private List<Department> departments = new ArrayList<>();
 
-    @XmlElement
-    public Genre getGenre() { return genre; }
-    public void setGenre(Genre genre) { this.genre = genre; }
+    @XmlElementWrapper(name = "employees", namespace = LIBRARY_NAMESPACE)
+    @XmlElement(name = "employee", namespace = LIBRARY_NAMESPACE)
+    private List<Employee> employees = new ArrayList<>();
 
-    @XmlElementWrapper(name = "reviews")
-    @XmlElement(name = "review")
-    public List<Review> getReviews() {
-        return reviews;
+    public Library() {
     }
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public List<Book> getBooks() { return books; }
+    public void setBooks(List<Book> books) { this.books = books; }
+
+    public List<User> getUsers() { return users; }
+    public void setUsers(List<User> users) { this.users = users; }
+
+    public List<Department> getDepartments() { return departments; }
+    public void setDepartments(List<Department> departments) { this.departments = departments; }
+
+    public List<Employee> getEmployees() { return employees; }
+    public void setEmployees(List<Employee> employees) { this.employees = employees; }
 }
