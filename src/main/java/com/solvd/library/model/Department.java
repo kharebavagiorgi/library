@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Department {
 
     @XmlAttribute
-    private String deptId;
+    private Long id;
 
     @XmlAttribute
     private String name;
@@ -18,8 +18,8 @@ public class Department {
 
     public Department() {}
 
-    public String getDeptId() { return deptId; }
-    public void setDeptId(String deptId) { this.deptId = deptId; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
