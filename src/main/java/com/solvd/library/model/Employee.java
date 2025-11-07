@@ -6,7 +6,7 @@ import jakarta.xml.bind.annotation.*;
 public class Employee {
 
     @XmlAttribute
-    private String empId;
+    private Long id;
 
     @XmlElement
     private String firstName;
@@ -15,12 +15,12 @@ public class Employee {
     private String lastName;
 
     @XmlElement
-    private String departmentId; // Association field
+    private String departmentId; 
 
     public Employee() {}
 
-    public String getEmpId() { return empId; }
-    public void setEmpId(String empId) { this.empId = empId; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
