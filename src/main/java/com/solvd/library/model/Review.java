@@ -6,7 +6,7 @@ import jakarta.xml.bind.annotation.*;
 public class Review {
 
     @XmlAttribute
-    private String reviewId;
+    private Long id;
 
     @XmlElement
     private int rating;
@@ -16,8 +16,8 @@ public class Review {
 
     public Review() {}
 
-    public String getReviewId() { return reviewId; }
-    public void setReviewId(String reviewId) { this.reviewId = reviewId; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public int getRating() { return rating; }
     public void setRating(int rating) { this.rating = rating; }
