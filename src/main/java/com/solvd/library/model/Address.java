@@ -3,8 +3,12 @@ package com.solvd.library.model;
 import jakarta.xml.bind.annotation.XmlAttribute;
 
 public class Address {
+    private Long id;
     private String street;
     private String city;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     @XmlAttribute
     public String getStreet() { return street; }
