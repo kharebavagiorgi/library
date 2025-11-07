@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"userId", "isActive", "registrationDateTime", "address"})
+@XmlType(propOrder = {"id", "isActive", "registrationDateTime", "address"})
 public class User {
     @XmlAttribute
-    private String userId;
+    private Long id;
     @XmlElement
     private LocalDateTime registrationDateTime;
     @XmlAttribute
@@ -18,8 +18,8 @@ public class User {
     @XmlElement
     private Address address;
 
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public LocalDateTime getRegistrationDateTime() { return registrationDateTime; }
     public void setRegistrationDateTime(LocalDateTime registrationDateTime) { this.registrationDateTime = registrationDateTime; }
