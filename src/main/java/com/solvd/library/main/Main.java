@@ -113,8 +113,6 @@ public class Main {
             List<String> employeeLastNames = JsonPath.read(json, "$.employees[*].lastName");
             List<Integer> firstBookRatings = JsonPath.read(json, "$.books[0].reviews[*].rating");
 
-
-            LOGGER.info("\nJSONPath Results (New Queries Included)");
             LOGGER.info("Book titles: " + titles);
             LOGGER.info("User IDs: " + userIds);
             LOGGER.info("Cities: " + cities);
