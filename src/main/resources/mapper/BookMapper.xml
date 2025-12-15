@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.library.mapper.BookMapper">
+
+    <resultMap id="BookResultMap" type="com.solvd.library.domain.Book">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="isbn" column="isbn"/>
+        <result property="publicationDate" column="publication_date"/>
+        <result property="pageCount" column="page_count"/>
+
+        <result property="genre" column="genre_id"/>
+
+        <association property="author" javaType="com.solvd.library.domain.Author">
+            <id property="id" column="author_id"/>
+            <result property="name" column="author_name"/>
+        </association>
+
+        <collection property="reviews" ofType="com.solvd.library.domain.Review">
+            <id property="id" column="review_id"/>
+            <result property="comment" column="comment"/>
+            <result property="rating" column="rating"/>
+        </collection>
+    </resultMap>
+
+    <insert id="create" parameterType="com.solvd.library.domain.Book" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `book` (title, isbn, author_id, publication_date, page_count, genre_id)
+        VALUES (
+        #{title},
+        #{isbn},
+        #{author.id},
+        #{publicationDate},
+        #{pageCount},
+        #{genre.id}
+        )
+    </insert>
+
+    <sql id="BookSelectColumns">
+        b.id, b.title, b.isbn, b.publication_date, b.page_count,
+        b.genre_id, a.id AS author_id, a.name AS author_name
+    </sql>
+
+    <select id="findById" parameterType="long" resultMap="BookResultMap">
+        SELECT
+        <include refid="BookSelectColumns"/>
+        FROM `book` b
+        LEFT JOIN author a ON b.author_id = a.id
+        WHERE b.id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BookResultMap">
+        SELECT
+        <include refid="BookSelectColumns"/>
+        FROM `book` b
+        LEFT JOIN author a ON b.author_id = a.id
+    </select>
+
+    <update id="update" parameterType="com.solvd.library.domain.Book">
+        UPDATE `book`
+        SET title=#{title},
+        isbn=#{isbn},
+        author_id=#{author.id},
+        publication_date=#{publicationDate},
+        page_count=#{pageCount},
+        genre_id=#{genre.id}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM `book` WHERE id=#{id}
+    </delete>
+
+    <select id="findBookWithAllDetails" parameterType="long" resultMap="BookResultMap">
+        SELECT
+        b.id, b.title, b.isbn, b.publication_date, b.page_count,
+        b.genre_id, a.id AS author_id, a.name AS author_name,
+        r.id AS review_id, r.comment, r.rating
+        FROM `book` b
+        LEFT JOIN author a ON b.author_id = a.id
+        LEFT JOIN review r ON b.id = r.book_id
+        WHERE b.id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,64 @@
+{
+  "id": 1,
+  "name": "City Central Library",
+  "books": [
+    {
+      "id": 1,
+      "isbn": "978-0321765723",
+      "title": "The Art of Programming",
+      "publicationDate": "2011-05-25",
+      "pageCount": 888,
+      "genre": "SCIENCE",
+      "reviews": [
+        {
+          "id": 1,
+          "rating": 5,
+          "comment": "Excellent resource."
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 101,
+      "isActive": true,
+      "registrationDateTime": "2023-01-15T10:30:00",
+      "address": {
+        "id": 501,
+        "street": "Main St 101",
+        "city": "Metropolis"
+      }
+    }
+  ],
+  "departments": [
+    {
+      "id": 201,
+      "name": "Science & Tech",
+      "books": [
+        {
+          "id": 1,
+          "isbn": "978-0321765723",
+          "title": "The Art of Programming",
+          "publicationDate": "2011-05-25",
+          "pageCount": 888,
+          "genre": "SCIENCE",
+          "reviews": [
+            {
+              "id": 1,
+              "rating": 5,
+              "comment": "Excellent resource."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "employees": [
+    {
+      "id": 301,
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "departmentId": "D001"
+    }
+  ]
+}

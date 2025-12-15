@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.library.mapper.ReviewMapper">
+
+    <resultMap id="ReviewResultMap" type="com.solvd.library.domain.Review">
+        <id property="id" column="review_id"/>
+        <result property="rating" column="rating"/>
+        <result property="comment" column="comment"/>
+
+        <result property="bookId" column="book_id"/>
+
+        <association property="book" javaType="com.solvd.library.domain.Book">
+            <id property="id" column="book_id"/>
+        </association>
+
+        <association property="user" javaType="com.solvd.library.domain.User">
+            <id property="id" column="user_id"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.solvd.library.domain.Review" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO review (rating, comment, book_id)
+        VALUES (#{rating}, #{comment}, #{bookId})
+    </insert>
+
+    <select id="findById" parameterType="long" resultMap="ReviewResultMap">
+        SELECT
+        r.id AS review_id,
+        r.rating,
+        r.comment,
+        r.book_id,
+        urc.user_id
+        FROM review r
+        LEFT JOIN user_review_contribution urc ON r.id = urc.review_id
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="ReviewResultMap">
+        SELECT
+        r.id AS review_id,
+        r.rating,
+        r.comment,
+        r.book_id,
+        urc.user_id
+        FROM review r
+        LEFT JOIN user_review_contribution urc ON r.id = urc.review_id
+    </select>
+
+    <update id="update" parameterType="com.solvd.library.domain.Review">
+        UPDATE review
+        SET rating = #{rating}, comment = #{comment}, book_id = #{bookId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM user_review_contribution WHERE review_id = #{id};
+        DELETE FROM review WHERE id = #{id};
+    </delete>
+
+</mapper>

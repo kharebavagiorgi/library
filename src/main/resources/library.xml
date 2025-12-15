@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library id="1" name="City Central Library"
+         xmlns="http://www.library.com/schema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.library.com/schema library.xsd">
+
+    <books>
+        <book>
+            <id>1</id>
+            <isbn>978-0321765723</isbn>
+            <title>The Art of Programming</title>
+            <publicationDate>2011-05-25</publicationDate>
+            <pageCount>888</pageCount>
+            <genre>SCIENCE</genre>
+            <reviews>
+                <review id="1">
+                    <rating>5</rating>
+                    <comment>Excellent resource.</comment>
+                </review>
+            </reviews>
+        </book>
+        <book>
+            <id>4</id>
+            <isbn>978-0451524823</isbn>
+            <title>A Study in Scarlet</title>
+            <publicationDate>1887-12-01</publicationDate>
+            <pageCount>128</pageCount>
+            <genre>FICTION</genre>
+            <reviews>
+                <review id="50">
+                    <rating>5</rating>
+                    <comment>The introduction to the legendary detective and his loyal companion.</comment>
+                </review>
+                <review id="51">
+                    <rating>4</rating>
+                    <comment>A classic start to the Holmes saga.</comment>
+                </review>
+            </reviews>
+        </book>
+    </books>
+
+    <users>
+        <user id="101" isActive="true">
+            <registrationDateTime>2023-01-15T10:30:00</registrationDateTime>
+            <address id="501" street="Main St 101" city="Metropolis"/>
+        </user>
+    </users>
+
+    <departments>
+        <department id="201" name="Science &amp; Tech">
+            <book>
+                <id>1</id>
+
+                <isbn>978-0321765723</isbn>
+
+                <title>The Art of Programming</title>
+
+                <publicationDate>2011-05-25</publicationDate>
+
+                <pageCount>888</pageCount>
+
+                <genre>SCIENCE</genre>
+
+                <reviews>
+                    <review id="1">
+                        <rating>5</rating>
+                        <comment>Excellent resource.</comment>
+                    </review>
+                </reviews>
+            </book>
+        </department>
+    </departments>
+
+    <employees>
+        <employee id="301">
+            <firstName>Alice</firstName>
+            <lastName>Smith</lastName>
+            <departmentId>D001</departmentId>
+        </employee>
+    </employees>
+</library>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.library.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.solvd.library.domain.User">
+        <id property="id" column="user_id"/>
+        <result property="isActive" column="is_active"/>
+        <result property="registrationDateTime" column="registration_date_time"/>
+
+        <association property="address" javaType="com.solvd.library.domain.Address">
+            <id property="id" column="address_id"/>
+            <result property="street" column="street"/>
+            <result property="city" column="city"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.solvd.library.domain.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (is_active, registration_date_time, address_id)
+        VALUES (#{isActive}, #{registrationDateTime}, #{address.id})
+    </insert>
+
+    <select id="findById" parameterType="long" resultMap="UserResultMap">
+        SELECT
+        u.id AS user_id,
+        u.is_active,
+        u.registration_date_time,
+        a.id AS address_id,
+        a.street,
+        a.city
+        FROM user u
+        LEFT JOIN address a ON u.address_id = a.id
+        WHERE u.id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="UserResultMap">
+        SELECT
+        u.id AS user_id,
+        u.is_active,
+        u.registration_date_time,
+        a.id AS address_id,
+        a.street,
+        a.city
+        FROM user u
+        LEFT JOIN address a ON u.address_id = a.id
+    </select>
+
+    <update id="update" parameterType="com.solvd.library.domain.User">
+        UPDATE user
+        SET is_active = #{isActive},
+        registration_date_time = #{registrationDateTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+</mapper>
