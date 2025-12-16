@@ -5,7 +5,7 @@
 
 <mapper namespace="com.solvd.library.mapper.ReviewMapper">
 
-    <resultMap id="ReviewResultMap" type="com.solvd.library.domain.Review">
+    <resultMap id="ReviewResultMap" type="com.solvd.library.domain.Review" autoMapping="false">
         <id property="id" column="review_id"/>
         <result property="rating" column="rating"/>
         <result property="comment" column="comment"/>

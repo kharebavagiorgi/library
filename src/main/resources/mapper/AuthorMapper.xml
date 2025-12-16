@@ -5,7 +5,7 @@
 
 <mapper namespace="com.solvd.library.mapper.AuthorMapper">
 
-    <resultMap id="AuthorResultMap" type="com.solvd.library.domain.Author">
+    <resultMap id="AuthorResultMap" type="com.solvd.library.domain.Author" autoMapping="false">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
     </resultMap>

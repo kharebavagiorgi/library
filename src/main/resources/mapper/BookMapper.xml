@@ -5,7 +5,7 @@
 
 <mapper namespace="com.solvd.library.mapper.BookMapper">
 
-    <resultMap id="BookResultMap" type="com.solvd.library.domain.Book">
+    <resultMap id="BookResultMap" type="com.solvd.library.domain.Book" autoMapping="false">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="isbn" column="isbn"/>
