@@ -1,7 +1,9 @@
 package com.solvd.library.service.impl;
 
+import com.solvd.library.domain.Author;
 import com.solvd.library.domain.Book;
 import com.solvd.library.mapper.BookMapper;
+import com.solvd.library.service.AuthorService;
 import com.solvd.library.service.BookService;
 import com.solvd.library.service.ReviewService;
 import com.solvd.library.config.MyBatisUtil;
@@ -22,12 +24,14 @@ public class BookServiceImpl implements BookService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private final ReviewService reviewService;
-
     private final EventPublisher eventPublisher;
+    private final AuthorService authorService; 
 
     public BookServiceImpl() {
         PersistenceFactory factory = new MyBatisFactory();
+
         this.reviewService = factory.createReviewService();
+        this.authorService = factory.createAuthorService();
 
         this.eventPublisher = new EventPublisher();
         this.eventPublisher.subscribe(new AuditServiceListener());
@@ -42,6 +46,24 @@ public class BookServiceImpl implements BookService {
             session.commit();
             return book;
         }
+    }
+
+    @Override
+    public Book createBookAndAuthor(Book book, Author author) {
+        LOGGER.info("Starting creation of Book and Author.");
+
+        if (author == null) {
+            LOGGER.warn("Attempting to create a book, but the Author object is null. Creating book only.");
+        } else {
+            authorService.create(author);
+            LOGGER.info("Created Author with ID: {}", author.getId());
+            book.setAuthor(author);
+        }
+
+        Book newBook = this.create(book);
+        LOGGER.info("Created Book with ID: {}", newBook.getId());
+
+        return newBook;
     }
 
     @Override
