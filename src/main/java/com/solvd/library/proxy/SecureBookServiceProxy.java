@@ -1,5 +1,6 @@
 package com.solvd.library.proxy;
 
+import com.solvd.library.domain.Author; 
 import com.solvd.library.domain.Book;
 import com.solvd.library.service.BookService;
 import org.slf4j.Logger;
@@ -24,6 +25,11 @@ public class SecureBookServiceProxy implements BookService {
     @Override
     public Book create(Book entity) {
         return realBookService.create(entity);
+    }
+
+    @Override
+    public Book createBookAndAuthor(Book book, Author author) {
+        return realBookService.createBookAndAuthor(book, author);
     }
 
     @Override
@@ -56,7 +62,6 @@ public class SecureBookServiceProxy implements BookService {
             realBookService.delete(id);
         } else {
             LOGGER.warn("PROXY DENIED: User role '{}' is NOT authorized to delete books. Operation blocked.", userRole);
-
         }
     }
 }
