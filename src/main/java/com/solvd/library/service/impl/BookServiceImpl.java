@@ -7,9 +7,12 @@ import com.solvd.library.service.ReviewService;
 import com.solvd.library.config.MyBatisUtil;
 import com.solvd.library.factory.MyBatisFactory;
 import com.solvd.library.factory.PersistenceFactory;
+import com.solvd.library.event.EventPublisher;
+import com.solvd.library.event.listener.AuditServiceListener;
+import com.solvd.library.event.listener.NotificationServiceListener;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; // NEW IMPORT
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +23,15 @@ public class BookServiceImpl implements BookService {
 
     private final ReviewService reviewService;
 
+    private final EventPublisher eventPublisher;
+
     public BookServiceImpl() {
         PersistenceFactory factory = new MyBatisFactory();
         this.reviewService = factory.createReviewService();
+
+        this.eventPublisher = new EventPublisher();
+        this.eventPublisher.subscribe(new AuditServiceListener());
+        this.eventPublisher.subscribe(new NotificationServiceListener());
     }
 
     @Override
@@ -68,6 +77,8 @@ public class BookServiceImpl implements BookService {
             session.commit();
             LOGGER.info("Successfully deleted Book ID: {}", id);
         }
+
+        eventPublisher.publishBookDeletion(id);
     }
 
     @Override
