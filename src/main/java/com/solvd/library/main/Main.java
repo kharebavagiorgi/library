@@ -36,21 +36,26 @@ public class Main {
         BookService decoratedBookService = new LoggingBookServiceDecorator(baseBookService);
 
         // --- 3. PROXY IMPLEMENTATION ---
+        // User starts as GUEST
         BookService bookService = new SecureBookServiceProxy(decoratedBookService, "GUEST");
 
         // --- 4. FACADE IMPLEMENTATION ---
         LibraryFacade libraryFacade = new LibraryFacadeImpl();
 
-        // Declaring IDs
+        // Declaring IDs (newAuthorId is no longer needed separately)
         final Long newBookId;
         final Long secondBookId;
-        final Long newAuthorId;
         final Long newReviewId;
         final Long facadeUserId = 1L;
 
         LOGGER.info("Starting Persistence Layer Demonstration...");
 
-        // 1. CREATE: Book (Sherlock Holmes)
+
+        // 1. COMPLEX CREATE: Book and Author
+
+        Author mainAuthor = new Author();
+        mainAuthor.setName("Arthur Conan Doyle 2");
+
         Book newBook = Book.builder()
                 .title("Sherlock Holmes")
                 .isbn("978-034539180")
@@ -60,44 +65,29 @@ public class Main {
                 .build();
 
         try {
-            bookService.create(newBook);
+            bookService.createBookAndAuthor(newBook, mainAuthor);
+
             newBookId = newBook.getId();
-            LOGGER.info("✅ CREATE: New book created with ID: {}", newBookId);
+            LOGGER.info("✅ COMPLEX CREATE: Book ID {} and Author ID {} created and linked.",
+                    newBookId, mainAuthor.getId());
+
         } catch (RuntimeException e) {
-            LOGGER.error("CREATE FAILED: Database error during book creation.", e);
+            LOGGER.error("COMPLEX CREATE FAILED: Database error during book/author creation.", e);
             return;
         }
 
-        // 1b. CREATE a second book (A Study in Scarlet)
         Book secondBook = Book.builder()
                 .title("A Study in Scarlet")
                 .isbn("978-150329056")
                 .pageCount(150)
                 .publicationDate(LocalDate.of(1887, 12, 1))
                 .genre(Genre.SCIENCE)
+                .author(mainAuthor)
                 .build();
+
         bookService.create(secondBook);
         secondBookId = secondBook.getId();
-
-        // 2. CREATE: Author
-        Author author = new Author();
-        author.setName("Arthur Conan Doyle 2");
-
-        try {
-            authorService.create(author);
-            newAuthorId = author.getId();
-            LOGGER.info("✅ CREATE: New author created with ID: {}", newAuthorId);
-
-            // Link Author to both books
-            newBook.setAuthor(author);
-            bookService.update(newBook);
-            secondBook.setAuthor(author);
-            bookService.update(secondBook);
-            LOGGER.info("✅ UPDATE: Books linked to Author ID {}", newAuthorId);
-        } catch (RuntimeException e) {
-            LOGGER.error("Author creation/linking failed.", e);
-            return;
-        }
+        LOGGER.info("✅ CREATE: Second book created with ID: {}", secondBookId);
 
         // 3. CREATE: Review
         Review review = new Review();
@@ -117,8 +107,8 @@ public class Main {
 
         // 4. READ & UPDATE DEMONSTRATION
 
-        // READ Author
-        Optional<Author> optionalAuthor = authorService.findById(newAuthorId);
+        // READ Author (Use the author object from the complex create)
+        Optional<Author> optionalAuthor = authorService.findById(mainAuthor.getId());
         optionalAuthor.ifPresent(a ->
                 LOGGER.info("✅ READ: Retrieved Author ID {}: {}", a.getId(), a.getName())
         );
@@ -144,7 +134,7 @@ public class Main {
             LOGGER.info("✅ UPDATE: Review ID {} updated.", r.getId());
         });
 
-        // Ensure Author Link is updated again (This is the block that had syntax errors)
+        // Ensure Author Link is updated again (This block is kept if linking logic isn't fully integrated into update)
         optionalAuthor.ifPresent(a -> {
             newBook.setAuthor(a);
             bookService.update(newBook);
